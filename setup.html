@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="SAP NetWeaver Cloud Addon for Spring Roo - Setup" />
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <title>SAP NetWeaver Cloud Addon for Spring Roo - Setup</title>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-35580400-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </head>
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/sapnwcloudlabs/nwcloud-roo-addon">View on GitHub</a>
+          <h1 id="project_title">SAP NetWeaver Cloud Addon<br/>for Spring Roo</h1>
+          <h2 id="project_tagline"><a href="index.html">Intro</a> | <a href="tutorial.html">Tutorial</a> &gt; Setup | <a href="overview.html">Overview</a></h2>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+
+        <h2 id="installing-the-prerequisites-roo-and-maven">Installing the prerequisites - Roo and Maven</h2>
+
+        <p>A basic requirement to get started with our Roo addon, is a working installation of <a href="http://www.springsource.org/spring-roo">Roo</a> and <a href="http://maven.apache.org/">Maven</a>.</p>
+
+        <p>The easiest way to get both, is to download the "SpringSource Tool Suite" (STS) from SpringSource. STS is an Eclipse-based IDE bundled with Spring technology like Roo.</p>
+
+        <p>STS can be downloaded here: <a href="http://www.springsource.org/sts">http://www.springsource.org/sts</a></p>
+
+        <p>After installing STS in a directory of your choice, you will find certain subdirectories there, e.g.</p>
+
+        <pre><code>spring-roo-1.2.1.RELEASE
+apache-maven-3.0.3</code></pre>
+
+        <p>Please make sure, that the <code>bin</code> directories of these folders are on the path, so that you are able to call the commands <code>roo</code> and <code>mvn</code> in whichever directory you are on the commandline. (Note: If you are using Linux or Mac OS then the command to start the Roo Shell is <code>roo.sh</code>.)</p>
+
+        <p>If you are behind a proxy, then please also issue the command <code>proxy configuration</code> on the Roo Shell to check if the right HTTP proxy is used by Roo. Information on how to set a proxy in Maven will be given later in this document.</p>
+
+        <p>If you have trouble installing STS, Roo, or Maven we would like to refer you to the official websites, where you will find more detailed instructions and a community forum to ask questions.</p>
+
+        <p>Websites:</p>
+
+        <ul>
+          <li>STS: <a href="http://www.springsource.org/sts">http://www.springsource.org/sts</a></li>
+          <li>Roo: <a href="http://www.springsource.org/spring-roo/">http://www.springsource.org/spring-roo/</a></li>
+          <li>Maven: <a href="http://maven.apache.org/">http://maven.apache.org/</a></li>
+        </ul>
+
+        <h2 id="installing-the-roo-addon">Installing the Roo addon</h2>
+
+        <h3 id="download-and-extract-the-addon-package">Download and extract the addon package</h3>
+
+        <p>Download the ZIP archive of the addon package: <a href="nwcloud-roo-addon-package.zip">nwcloud-roo-addon-package.zip</a></p>
+
+        <p>Extract its contents to a folder of your choice. In the following this folder will be called <code>ROO_ADDONS</code>.</p>
+
+        <blockquote>
+          <p>Whenever in the following commands or instructions the term <code>ROO_ADDONS</code> is used, please replace the term by the fully qualified path to the directory, where you extracted the contents of the ZIP file.</p>
+        </blockquote>
+
+        <h3 id="install-to-local-maven-repository-and-roo">Install to local Maven repository and Roo</h3>
+
+        <p>Open a commandline and change to the directory <code>ROO_ADDONS</code>. There execute the following command to install required artifacts to the local Maven repository and Roo.</p>
+
+        <p>If you are using Windows:</p>
+
+        <pre><code>install_addons.bat</code></pre>
+
+        <p>If you are using Linux or Mac OS:</p>
+
+        <pre><code>chmod +x ./install_addons.sh
+./install_addons.sh</code></pre>
+
+        <h3 id="check-installation-in-roo">Check installation in Roo</h3>
+
+        <p>Start the Roo Shell and issue the following command to get the list of loaded OSGi bundles in Roo:</p>
+
+        <pre><code>osgi ps</code></pre>
+
+        <p>You should see the installed addon at the end of the appearing list, similar to this:</p>
+
+        <pre><code>...
+[  74] [Active     ] [    1] nwcloud-roo-addon (1.0.0.RELEASE)
+...</code></pre>
+
+        <p>If you see a line like this, then the addon has successfully been installed to Roo.</p>
+
+        <p>If such a line did not show up in the list, then try to manually install the addon using the following command:</p>
+
+        <pre><code>osgi start --url file:///ROO_ADDONS/com.sap.research.roo.addon.nwcloud-1.0.0.RELEASE.jar</code></pre>
+
+        <p>Hint: If there are any spaces in the path <code>ROO_ADDONS</code> please replace each of them with <code>%20</code> in this command.</p>
+
+        <p>If you ever need to uninstall the addon, then this can be done by the following command on the Roo shell:</p>
+
+        <pre><code>osgi uninstall --bundleSymbolicName com.sap.research.roo.addon.nwcloud</code></pre>
+
+        <h2 id="maven-configuration">Maven configuration</h2>
+
+        <h3 id="enable-group-com.sap.research">Enable group com.sap.research</h3>
+
+        <p>Figure out where your currently used Maven configuration file <code>settings.xml</code> is located. Usually this is in the <code>conf</code> directory of your local Maven installation or in the <code>~/.m2</code> directory of your user (using Windows this would be something like <code>c:\Users\YourUser\.m2</code>).</p>
+
+        <p>In <code>settings.xml</code> search for the <code>pluginGroups</code> tag and insert <code>com.sap.research</code> as an artifact group that contains plugins, like this:</p>
+
+        <pre><code>&lt;pluginGroups&gt;
+  &lt;!--pluginGroup
+   | Specifies a further group identifier to use for plugin lookup.
+  --&gt;
+  &lt;pluginGroup&gt;com.sap.research&lt;/pluginGroup&gt;
+&lt;/pluginGroups&gt;</code></pre>
+
+        <h3 id="configure-proxy">Configure proxy</h3>
+
+        <p>If you are behind a proxy, then also search for the <code>proxies</code> tag and insert a <code>proxy</code> tag defining your proxy settings, like this:</p>
+
+        <pre><code>&lt;proxies&gt;
+  &lt;!-- proxy
+   | Specification for one proxy, to be used in connecting to the network.
+  --&gt;
+  &lt;proxy&gt;
+    &lt;id&gt;MyProxy&lt;/id&gt;
+    &lt;active&gt;true&lt;/active&gt;
+    &lt;protocol&gt;http&lt;/protocol&gt;
+    &lt;host&gt;proxy&lt;/host&gt;
+    &lt;port&gt;8080&lt;/port&gt;
+    &lt;nonProxyHosts&gt;localhost&lt;/nonProxyHosts&gt;
+  &lt;/proxy&gt;
+&lt;/proxies&gt;</code></pre>
+
+        <h2 id="sap-netweaver-cloud-sdk">SAP NetWeaver Cloud SDK</h2>
+
+        <p>When you actually use the Roo addon later on, and want to deploy a created application to SAP NetWeaver Cloud, the SAP NetWeaver Cloud SDK (also known as "Neo SDK") will be needed by a Maven plugin to actually do the deployment in an automated way for you. As a preparational step, you could download the SDK now and extract it to a directory of your choice. A current version of the SDK can always be downloaded here:</p>
+
+        <p><a href="https://tools.netweaver.ondemand.com/">https://tools.netweaver.ondemand.com/</a></p>
+
+        <p>In whichever directory you extract the SDK to, please remember that this directory exists and where it is. You will need to define this directory in a settings file later on, before you are actually able to deploy web applications to the SAP NetWeaver Cloud platform. Please follow the tutorial we have prepared to learn on how and where to set this setting.</p>
+
+        <h2 id="and-now">And now?</h2>
+
+        <p>Everything should be set up now. Let’s start the <a href="tutorial.html">tutorial</a>!</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">&copy; SAP AG, made available under Apache License 2.0</p>
+      </footer>
+    </div>
+
+  </body>
+</html>

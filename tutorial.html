@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="SAP NetWeaver Cloud Addon for Spring Roo - Tutorial" />
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <title>SAP NetWeaver Cloud Addon for Spring Roo - Tutorial</title>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-35580400-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </head>
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/sapnwcloudlabs/nwcloud-roo-addon">View on GitHub</a>
+          <h1 id="project_title">SAP NetWeaver Cloud Addon<br/>for Spring Roo</h1>
+          <h2 id="project_tagline"><a href="index.html">Intro</a> | Tutorial &gt; <a href="setup.html">Setup</a> | <a href="overview.html">Overview</a></h2>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+
+      	<h2 id="tutorial">Tutorial</h2>
+
+      	<p>The best way to learn about Roo and our addon is to try it out. To provide you some guidance in this process, we prepared the following tutorial. Following this tutorial, you will learn how to</p>
+
+      	<ul>
+      		<li>Create a web application using Roo</li>
+      		<li>Configure your web application for deployment to SAP NetWeaver Cloud</li>
+      		<li>Deploy and start your web application on SAP NetWeaver Cloud</li>
+      	</ul>
+
+      	<blockquote>
+      	  <p>In order to follow the tutorial, please make sure that you already have installed Roo as well as downloaded and installed our addon. Please refer to <a href="setup.html">Setting up Roo and addons</a> for instructions on how to do the initial setup.</p>
+      	</blockquote>
+
+      	<h2 id="get-your-hands-dirty-starting-the-tutorial">Get your hands dirty - starting the tutorial</h2>
+
+      	<p>What we will do in the following is to create a small web application for managing votes at a demo event. At such an event several presenters show their demos, which are then judged via votes by jury members.
+      	To get started with our web application, we open the commandline and create a new, empty folder named <code>demo</code>. We then move into this folder and start Roo. If you are using Windows, you need to execute the following commands:</p>
+
+      	<pre><code>c:\&gt;mkdir demo
+c:\&gt;cd demo
+c:\demo&gt;roo
+    ____  ____  ____
+   / __ \/ __ \/ __ \
+  / /_/ / / / / / / /
+ / _, _/ /_/ / /_/ /
+/_/ |_|\____/\____/    X.Y.Z.RELEASE [rev abcdef0]
+
+
+Welcome to Spring Roo. For assistance press TAB or type "hint" then hit ENTER.
+roo&gt;</code></pre>
+
+      	<p>Now issue the following commands on the Roo shell to do the initial setup of our web project:</p>
+
+      	<pre><code>project --topLevelPackage com.sap.research --projectName voting
+persistence setup --provider ECLIPSELINK --database HYPERSONIC_IN_MEMORY</code></pre>
+
+      	<p>The first command tells Roo to setup a project named <code>voting</code> having the top level package <code>com.sap.research</code> for our java classes. The second command sets up the kind of persistency we want to use to store our data. The first parameter tells Roo to use <a href="http://www.eclipse.org/eclipselink/">Eclipse Link</a> as JPA provider. Using Eclipse Link is the standard for NW Cloud. The second parameter specifies that we want to use a <a href="http://hsqldb.org/">HSQLDB</a> that stores data just in memory. This is great for local testing, as we do not need to setup a database server. Later on you will see how easy it is to switch to NW Cloud's persistency service to really store our data.</p>
+
+      	<h3 id="defining-the-data-model">Defining the data model</h3>
+
+      	<p>After the initial setup, we need to think about which entities should be managed by our application. For our exemplarily chosen voting app, the following data model seems to be sufficient:</p>
+
+      	<p><img src="images/UML-Model-Voting.png" alt="Data model of voting web application" title="Data model of voting web application" style="max-width: 279px;max-height: 260px;display: block;margin: 0 auto;text-align: center;" /></p>
+
+      	<p>We have three entities:</p>
+
+      	<ul>
+      		<li>a <code>Demo</code> that has a title and a presenter,</li>
+      		<li>a <code>Jurymember</code> that has a name, and </li>
+      		<li>a <code>Vote</code> which has a rating and is referencing the jury member that is giving the vote as well as the demo that is voted.</li>
+      	</ul>
+
+      	<p>To define this data model in our Roo project and let Roo create all the necessary Java classes with according persistency handling for us, issue the following commands on the Roo shell:</p>
+
+      	<pre><code>entity jpa --class ~.domain.JuryMember
+field string --fieldName name
+entity jpa --class ~.domain.Demo
+field string --fieldName title
+field string --fieldName presenter
+entity jpa --class ~.domain.Vote
+field reference --fieldName jurymember --type ~.domain.JuryMember
+field reference --fieldName demo --type ~.domain.Demo
+field string --fieldName rating</code></pre>
+
+      	<h3 id="creating-the-web-ui">Creating the web UI</h3>
+
+      	<p>To be able to manage our entities, we let Roo create a web UI for us, that provides all CRUD operations (create, read, update, delete). We do this, by issuing just two commands on the Roo shell:</p>
+
+      	<pre><code>web mvc setup
+web mvc all --package ~.controller</code></pre>
+
+      	<p>The first command configures our project to use the <a href="http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/mvc.html">Spring MVC</a> framework as a base for the web UI. The second command creates controllers (enabling the CRUD operations) for all of the entities defined by us.</p>
+
+      	<p>That’s it! We have created our web application using Roo and may now exit the Roo shell using the <code>exit</code> command. This brings us back to the commandline.</p>
+
+      	<h3 id="compile-and-start-locally">Compile and start locally</h3>
+
+      	<p>Now it’s time to compile and run our created web application. As Roo creates standard Maven projects, we can now use Maven to compile our app, package it to a WAR file, download and start a <a href="http://tomcat.apache.org/">Tomcat</a> application server for testing, and deploy our WAR to the Tomcat. And we can do all this with just one command on the commandline:</p>
+
+      	<pre><code>mvn package tomcat:run</code></pre>
+
+      	<p>As soon as the Tomcat application server is up and running you should see the following line on the commandline:</p>
+
+      	<pre><code>INFO: Starting Coyote HTTP/1.1 on http-8080</code></pre>
+
+      	<p>To access our voting web application, open your favorite web browser and go to the following URL:</p>
+
+      	<pre><code>http://localhost:8080/voting</code></pre>
+
+      	<p>You should now see the voting web application:</p>
+
+      	<p><img src="images/Voting-App-Spring-MVC-UI.png" alt="Screenshot of generated voting web application" title="Screenshot of generated voting web application" style="max-width: 809px;max-height: 285px;display: block;margin: 0 auto;text-align: center;"/></p>
+
+      	<p>Feel free to experiment a bit with the application, e.g. by creating a demo, a jury member, and a vote for the created demo and jury member.</p>
+
+      	<h2 id="move-it-to-the-cloud">Move it to the cloud</h2>
+
+				<h3 id="deploying-and-running-on-sap-netweaver-cloud">Deploying and running on SAP NetWeaver Cloud</h3>
+
+      	<p>Up until now, we created our web application and tested it locally. Now, we want our application to run in the SAP NetWeaver Cloud and also to store its data there. To achieve this, we will use our addon to do two things:</p>
+
+      	<ul>
+      		<li>Integrate a special maven build plugin to the project, that will ease deployment to the SAP NetWeaver Cloud.</li>
+      		<li>Configure JPA persistency settings of the project to use NW Cloud's persistency service for data storage.</li>
+      	</ul>
+
+      	<p>To configure the project in this way, start Roo and issue the following two commands on the Roo shell:</p>
+
+      	<pre><code>nwcloud enable-deploy
+nwcloud enable-jpa</code></pre>
+
+      	<p>Now exit Roo and use Maven to build the web application.</p>
+
+      	<pre><code>mvn clean package</code></pre>
+
+      	<p>If you look at the output Maven creates at the end of the build process, you should now see some additional helpful notes about how you can deploy and run your web application to/in the SAP NetWeaver Cloud:</p>
+
+      	<pre><code>...
+[echo]
+[echo] WAR file created
+[echo] ================
+[echo]
+[echo] Your application has been packaged to a WAR file:
+[echo] c:/demo/target/voting-0.1.0.BUILD-SNAPSHOT.war
+[echo]
+[echo] What to do now?
+[echo] ---------------
+[echo]
+[echo] You could use the NWCloud-Maven-Plugin now to deploy your
+[echo] app to SAP NetWeaver Cloud, or test it on a local instance.
+[echo]
+[echo] To use the NWCloud-Maven-Plugin, type
+[echo]
+[echo] mvn nwcloud:&lt;goal&gt;
+[echo]
+[echo] where &lt;goal&gt; is one of the following actions:
+[echo]
+[echo] deploy        -&gt;  Deploy WAR as app to NW Cloud
+[echo] start         -&gt;  Start app instance on NW Cloud
+[echo] stop          -&gt;  Stop app instance on NW Cloud
+[echo] undeploy      -&gt;  Undeploy app from NW Cloud
+[echo] status        -&gt;  Show status of app on NW Cloud
+[echo] apps          -&gt;  Show apps deployed on NW Cloud account
+[echo] comps         -&gt;  Show components of deployed app on NW Cloud
+[echo]
+[echo] deploy-local  -&gt;  Deploy WAR to local NW Cloud server
+[echo] start-local   -&gt;  Start local NW Cloud server
+[echo] stop-local    -&gt;  Stop local NW Cloud server
+[echo] clean-local   -&gt;  Delete WAR from local NW Cloud server
+[echo]
+[echo] usage         -&gt;  Show usage info and currently used settings
+[echo]
+...</code></pre>
+
+    	  <p><strong>Setting the deployment options</strong></p>
+    	  <p>For the next step it is important that you adjust the file <code>nwcloud.properties</code> that has been created by our addon in the project’s root directory. In this file you need to define</p>
+
+    	  <ul>
+    	  	<li>your SCN user (to be able to access SAP NetWeaver Cloud),</li>
+    	  	<li>the desired target of deployment, and</li>
+    	  	<li>the location of the SAP NetWeaver Cloud SDK.</li>
+    	  </ul>
+
+        <blockquote>
+      	  <p><strong>SCN user and 90-day-trial</strong></p>
+      	  <p>If you do not have access to SAP NetWeaver Cloud yet, please register a user at <a href="http://scn.sap.com/">SAP Community Network (SCN)</a> and follow the steps explained <a href="http://scn.sap.com/docs/DOC-28197">here</a> to get a free 90-day-trial.</p>
+      	</blockquote>
+
+      	<p>Now use the text editor of your choice to open <code>nwcloud.properties</code>, and set your SCN user (password is optional) in the following lines:</p>
+
+      	<pre><code># -----------------------------------------------------------------------------
+# SCN user (and password)
+# -----------------------------------------------------------------------------
+#  - user: SCN user (as registered at http://scn.sap.com/)
+#  - password: Password of SCN user. If not specified, it will be queried on
+#              the commandline each time needed.
+user=myscnuser
+#password=myscnpassword</code></pre>
+
+      	<p>Define where to deploy the web application by adjusting the following lines:</p>
+
+      	<pre><code># -----------------------------------------------------------------------------
+# Target for deployment (host, account, application)
+# -----------------------------------------------------------------------------
+#  - host: The target platform to deploy to (e.g. https://netweaver.ondemand.com)
+#  - account: The account to deploy to
+#  - application:
+#     - Name/ID of the application to deploy (non-empty, alphanumeric, lowercase
+#       letters, starting with a letter, max. 30 characters).
+#     - If not specified, the maven project name in lowercase letters will be used.
+host=https://netweaver.ondemand.com
+account=myaccount
+#application=myapp</code></pre>
+
+      	<blockquote>
+      	  <p><strong>Hint</strong></p>
+      	  <p>If you are using the SAP NetWeaver Cloud 90-day-trial then the host is <code>https://nwtrial.ondemand.com</code></p>
+      	</blockquote>
+
+      	<p>Finally make sure that the following line is pointing to the directory where you have installed the SAP NetWeaver Cloud SDK (Neo SDK) to (cf. section "SAP NetWeaver Cloud SDK" of the initial <a href="setup.html">setup instructions</a>).</p>
+
+      	<pre><code># -----------------------------------------------------------------------------
+# Location of Neo SDK
+# -----------------------------------------------------------------------------
+#  - Download Neo SDK from: https://tools.netweaver.ondemand.com/
+#  - Extract Neo SDK to a directory and specify its path in sdk.dir setting.
+#     - Windows users: Please use double backslash instead of single backslash (e.g. c:\\Program Files\\Neo-SDK)
+#     - Linux/Mac users: Just use normal slash as usual (e.g. /home/myuser/bin/neo-sdk)
+sdk.dir=c:\\Program Files\\Neo-SDK</code></pre>
+
+      	<p>After we have setup the deployment options, we can now perform the actual deployment as explained by the help text. We can use the Maven commands <code>nwcloud:deploy</code> for deployment to NW Cloud and then use <code>nwcloud:start</code> to start up an instance in NW Cloud to run our web application. And as Maven allows to write sequences of commands we can do this using one line:</p>
+
+      	<pre><code>mvn nwcloud:deploy nwcloud:start</code></pre>
+
+      	<p>Depending on the speed of your network connection, the process of deploying and starting up the instance may take a few minutes. Finally, after the instance has successfully been started, you should see lines like the following ones:</p>
+
+      	<pre><code>...
+[java] web: STARTED
+[java]
+[java] URL: https://votingmyaccount.netweaver.ondemand.com
+[java]
+[java] Access points:
+[java]   https://votingmyaccount.netweaver.ondemand.com
+...</code></pre>
+
+      	<p>After successful deployment and startup of the instance, we can now access our web application in the SAP NetWeaver Cloud. To do this, we need to append a slash <code>/</code> and the name of the web application at the end of the URL that is shown on the console after the startup of the instance. As the web application in our example is called <code>voting</code> we use the following URL in our favorite web browser to access it:</p>
+
+      	<pre><code>https://votingmyaccount.netweaver.ondemand.com/voting</code></pre>
+
+      	<p>If you now enter data like demos, jury members, and votes into the web application, this data will be stored using the persistency service of the NW Cloud. So you can shutdown and then restart the instance, and the data will still be there, as it is stored independently from your web application in a database on the NW Cloud.</p>
+
+      	<h2 id="congratulations">Congratulations</h2>
+
+      	<p>That’s it!</p>
+
+      	<p>You just created your first web application using Roo and successfully deployed it to the NW Cloud platform - and all this in just a few minutes!</p>
+
+      	<p>What you could do now:</p>
+
+      	<ul>
+      		<li>Import the Maven project into an IDE like Eclipse or STS and start modifying or extending it.</li>
+      		<li>Create a mobile app that uses the web application as a backend by pushing/pulling data to/from it in JSON format using its REST interfaces.</li>
+      		<li>Go to the <a href="http://www.springsource.org/spring-roo">Roo website</a> and find out more about Roo.</li>
+      	</ul>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">&copy; SAP AG, made available under Apache License 2.0</p>
+      </footer>
+    </div>
+
+  </body>
+</html>
