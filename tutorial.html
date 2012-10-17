@@ -243,6 +243,14 @@ account=myaccount
 #     - Linux/Mac users: Just use normal slash as usual (e.g. /home/myuser/bin/neo-sdk)
 sdk.dir=c:\\Program Files\\Neo-SDK</code></pre>
 
+      	<p>If you are behind a proxy, then proxy settings will tried to be autodetected from environment variables. If you experience any problems with network connectivity, e.g. when deploying your app, try to uncomment the following parameter and set the proxy settings manually. This can be done here:</p>
+
+      	<pre><code># -----------------------------------------------------------------------------
+# Proxy settings for Java Virtual Machine
+# - Proxy settings are tried to be autodetected from environment variables.
+# - If you are behind a proxy and autodetect does not work or you need to override the settings, this can be done here.
+#sdk.proxy=-Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.nonProxyHosts="localhost|127.0.0.1" -Dhttps.nonProxyHosts="localhost|127.0.0.1" -Dhttp.proxyUser=proxyuser -Dhttp.proxyPassword=proxypassword -Dhttps.proxyUser=proxyuser -Dhttps.proxyPassword=proxypassword</code></pre>
+
       	<p>After we have setup the deployment options, we can now perform the actual deployment as explained by the help text. We can use the Maven commands <code>nwcloud:deploy</code> for deployment to NW Cloud and then use <code>nwcloud:start</code> to start up an instance in NW Cloud to run our web application. And as Maven allows to write sequences of commands we can do this using one line:</p>
 
       	<pre><code>mvn nwcloud:deploy nwcloud:start</code></pre>
