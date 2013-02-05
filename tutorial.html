@@ -207,10 +207,12 @@ nwcloud enable-jpa</code></pre>
 # SCN user (and password)
 # -----------------------------------------------------------------------------
 #  - user: SCN user (as registered at http://scn.sap.com/)
-#  - password: Password of SCN user. If not specified, it will be queried on
-#              the commandline each time needed.
+#  - password: Password of SCN user. If not specified here or (encrypted) in
+#              Maven settings, it will be queried on the commandline each time needed.
 user=myscnuser
 #password=myscnpassword</code></pre>
+
+      	<p>(Note: It is possible to use encrypted passwords from Maven settings here. Further information can be found in section "Using encrypted passwords" of appendix <a href="https://github.com/sapnwcloudlabs/nwcloud-maven-plugin/blob/master/README.md">here</a>.)</p>
 
       	<p>Define where to deploy the web application by adjusting the following lines:</p>
 
