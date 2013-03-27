@@ -1,4 +1,4 @@
-SAP NetWeaver Cloud Addon for Spring Roo
+SAP HANA Cloud Addon for Spring Roo
 ========================================
 
 Introduction
@@ -20,7 +20,7 @@ Tutorial
 
 ### How to get started? ###
 
-We have prepared a tutorial that shows you how to install the addon, create a web application and deploy and run it on SAP NetWeaver Cloud. The tutorial is available [here](http://sapnwcloudlabs.github.com/nwcloud-roo-addon/tutorial.html).
+We have prepared a tutorial that shows you how to install the addon, create a web application and deploy and run it on SAP NetWeaver Cloud. The tutorial is available [here](http://sap.github.com/cloud-roo-addon/tutorial.html).
 
 
 Building, installing and using the addon
@@ -49,7 +49,7 @@ If you don't want to build the addon by yourself, but just use it, then please r
 
 3. Using
 
-	The addintional commands provided by the addon are available after installing the addon. To build and deploy Roo projects after having executed the command `nwcloud enable-deploy`, you will need to have the [NWCloud-Maven-Plugin](https://github.com/sapnwcloudlabs/nwcloud-maven-plugin) installed.
+	The addintional commands provided by the addon are available after installing the addon. To build and deploy Roo projects after having executed the command `nwcloud enable-deploy`, you will need to have the [NWCloud-Maven-Plugin](https://github.com/sap/cloud-maven-plugin) installed.
 
 
 ### Building the addon ###
