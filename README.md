@@ -10,7 +10,7 @@ Introduction
 
 This project, the "SAP NetWeaver Cloud Addon for Spring Roo" is an addon for Roo which adds commands to Roo that make it easy and comfortable to configure your Roo-generated projects for use on SAP NetWeaver Cloud and to do the actual deployment. This addon is also provided under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 
-[SAP NetWeaver Cloud](http://scn.sap.com/community/developer-center/cloud-platform) is a Java-based Platform-as-a-Service (PaaS) provided by [SAP AG](http://www.sap.com/). Currently SAP AG provides a [free developer account](http://scn.sap.com/docs/DOC-28197) for SAP NetWeaver Cloud, so it's easy to give it a try.
+[SAP Hana Cloud](http://scn.sap.com/community/developer-center/cloud-platform) is a Java-based Platform-as-a-Service (PaaS) provided by [SAP AG](http://www.sap.com/). Currently SAP AG provides a [free developer account](http://scn.sap.com/docs/DOC-28197) for SAP NetWeaver Cloud, so it's easy to give it a try.
 
 You can use Roo and the provided addon here to create a basic web application, deploy and run it on SAP NetWeaver Cloud in minutes. Roo generates 100% pure Java code, packaged as a standard Maven project, so it is easy to handle and extend. Import it in your favorite IDE like Eclipse and start extending it, or write a mobile app connecting to the REST interfaces to your data, that Roo can automatically create for you. Try it out, and learn how Roo and this addon can help you kickstarting your ideas on SAP NetWeaver Cloud.
 
