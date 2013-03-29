@@ -25,8 +25,8 @@ import org.springframework.roo.shell.CliCommand;
 import org.springframework.roo.shell.CommandMarker;
 
 /**
- * Roo Addon for SAP NetWeaver Cloud - Command Class
- * -------------------------------------------------
+ * Roo Addon for SAP HANA Cloud - Command Class
+ * --------------------------------------------
  * 
  * The command class is registered by the Roo shell following an automatic classpath scan,
  * and enables the desired commands in Roo by implementing the CommandMarker interface.
@@ -65,7 +65,7 @@ public class NWCloudCommands implements CommandMarker {
 	}
 	
 	// *************************************************************************
-	// SAP NetWeaver Cloud Addon Commands
+	// SAP HANA Cloud Addon Commands
 	// *************************************************************************
 	
 	// --------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ public class NWCloudCommands implements CommandMarker {
 		return operations.nwcloudEnableDeployIsAvailable();
 	}
 	
-	@CliCommand(value = "nwcloud enable-deploy", help="Prepare application for deployment on SAP NetWeaver Cloud platform")
+	@CliCommand(value = "nwcloud enable-deploy", help="Prepare application for deployment on SAP HANA Cloud platform")
 	public void nwcloudEnableDeploy() {
 		operations.nwcloudEnableDeploy();
 	}
@@ -105,7 +105,7 @@ public class NWCloudCommands implements CommandMarker {
 		return operations.nwcloudEnableJPAIsAvailable();
 	}
 
-	@CliCommand(value = "nwcloud enable-jpa", help="Configure JPA persistency to use SAP NetWeaver Cloud persistency service")
+	@CliCommand(value = "nwcloud enable-jpa", help="Configure JPA persistency to use SAP HANA Cloud persistency service")
 	public void nwcloudEnableJPA() {
 		operations.nwcloudEnableJPA();
 	}
@@ -129,7 +129,7 @@ public class NWCloudCommands implements CommandMarker {
 	// --------------------------------------------------------------------------------
 
 /*
-	@CliCommand(value = "nwcloud addon-debug", help="Show some output of the SAP NetWeaver Cloud addon (for debugging only)")
+	@CliCommand(value = "nwcloud addon-debug", help="Show some output of the SAP HANA Cloud addon (for debugging only)")
 	public void nwcloudAddonDebug() {
 		operations.nwcloudAddonDebug();
 	}

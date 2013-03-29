@@ -17,8 +17,8 @@
 package com.sap.research.roo.addon.nwcloud;
 
 /**
- * Roo Addon for SAP NetWeaver Cloud - Operations Interface
- * --------------------------------------------------------
+ * Roo Addon for SAP HANA Cloud - Operations Interface
+ * ---------------------------------------------------
  * 
  * This class defines the interface of the commands our addon should provide.
  * 

@@ -33,8 +33,8 @@
     		<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
-    <description>SAP NetWeaver Cloud Addon for Spring Roo</description>
-    <url>https://github.com/mispdev/nwcloud-roo-addon</url>
+    <description>SAP HANA Cloud Addon for Spring Roo</description>
+    <url>https://github.com/SAP/cloud-roo-addon</url>
     <properties>
         <roo.version>1.2.1.RELEASE</roo.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

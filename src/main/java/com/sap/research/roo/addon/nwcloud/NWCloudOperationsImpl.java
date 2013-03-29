@@ -46,8 +46,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Roo Addon for SAP NetWeaver Cloud - Operations Implementation class
- * -------------------------------------------------------------------
+ * Roo Addon for SAP HANA Cloud - Operations Implementation class
+ * --------------------------------------------------------------
  * 
  * This class implements the interface of the addon operations as defined in NWCloudOperations.
  * The interface in NWCloudOperations has been used to bind Roo commands defined in NWCloudCommands
@@ -130,7 +130,7 @@ public class NWCloudOperationsImpl implements NWCloudOperations {
 	 *     defined in "src/main/resources/[...]/configuration.xml". One aspect of this is
 	 *     the integration of our maven-nwcloud-plugin in the package phase of the Maven build,
 	 *     so that the goal "hint" of it is called that is providing further information
-	 *     for the user on what can be done now (e.g. deploying WAR to NW Cloud).
+	 *     for the user on what can be done now (e.g. deploying WAR to HANA Cloud).
 	 * 2.) Copy the "src/main/resources/[...]/nwcloud.properties" to the root of the project.
 	 *     The file "nwcloud.properties" stores the configuration for the actions that
 	 *     can be performed using the maven-nwcloud-plugin.
@@ -141,7 +141,7 @@ public class NWCloudOperationsImpl implements NWCloudOperations {
 		//    This will
 		//      - Add maven-bundle-plugin to create a more OSGi compatible MANIFEST.MF
 		//      - Reconfigure maven-war-plugin to use the MANIFEST.MF created by maven-bundle-plugin
-		//      - Add maven-nwcloud-plugin to print out hints on how to deploy to NW Cloud after packaging
+		//      - Add maven-nwcloud-plugin to print out hints on how to deploy to HANA Cloud after packaging
 		this.backup(this.getPOM().getPath(), null);
 		Element configurationXml = XmlUtils.getConfiguration(getClass());
 		if (configurationXml!=null) {
@@ -374,7 +374,7 @@ public class NWCloudOperationsImpl implements NWCloudOperations {
 
 	/**
 	 * This is the command "nwcloud enable-jpa". It will configure the JPA persistence layer in a
-	 * way that will use the NW Cloud persistence service.
+	 * way that will use the HANA Cloud persistence service.
 	 */
 	public void nwcloudEnableJPA() {
 
@@ -393,7 +393,7 @@ public class NWCloudOperationsImpl implements NWCloudOperations {
 		// Backup "persistence.xml" which is located in this folder
 		this.backup(dirWebMetaInf + File.separatorChar + "persistence.xml", null);
 		// Overwrite the existing "persistence.xml" with the one included in the resources of our addon
-		copyFileFromAddonToProject(dirWebMetaInf, "persistence.xml", "NW Cloud JPA persistency config (needs EclipseLink)");
+		copyFileFromAddonToProject(dirWebMetaInf, "persistence.xml", "HANA Cloud JPA persistency config (needs EclipseLink)");
 		
 		// --------------------------------------------------------------------------------
 		
