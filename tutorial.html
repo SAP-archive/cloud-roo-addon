@@ -3,9 +3,9 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="SAP NetWeaver Cloud Addon for Spring Roo - Tutorial" />
+    <meta name="description" content="SAP HANA Cloud Addon for Spring Roo - Tutorial" />
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <title>SAP NetWeaver Cloud Addon for Spring Roo - Tutorial</title>
+    <title>SAP HANA Cloud Addon for Spring Roo - Tutorial</title>
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-35580400-2']);
@@ -22,8 +22,8 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/sapnwcloudlabs/nwcloud-roo-addon">View on GitHub</a>
-          <h1 id="project_title">SAP NetWeaver Cloud Addon<br/>for Spring Roo</h1>
+          <a id="forkme_banner" href="https://github.com/SAP/cloud-roo-addon">View on GitHub</a>
+          <h1 id="project_title">SAP HANA Cloud Addon<br/>for Spring Roo</h1>
           <h2 id="project_tagline"><a href="index.html">Intro</a> | Tutorial &gt; <a href="setup.html">Setup</a> | <a href="overview.html">Overview</a></h2>
         </header>
     </div>
@@ -38,8 +38,8 @@
 
       	<ul>
       		<li>Create a web application using Roo</li>
-      		<li>Configure your web application for deployment to SAP NetWeaver Cloud</li>
-      		<li>Deploy and start your web application on SAP NetWeaver Cloud</li>
+      		<li>Configure your web application for deployment to SAP HANA Cloud</li>
+      		<li>Deploy and start your web application on SAP HANA Cloud</li>
       	</ul>
 
       	<blockquote>
@@ -69,7 +69,7 @@ roo&gt;</code></pre>
       	<pre><code>project --topLevelPackage com.sap.research --projectName voting
 persistence setup --provider ECLIPSELINK --database HYPERSONIC_IN_MEMORY</code></pre>
 
-      	<p>The first command tells Roo to setup a project named <code>voting</code> having the top level package <code>com.sap.research</code> for our java classes. The second command sets up the kind of persistency we want to use to store our data. The first parameter tells Roo to use <a href="http://www.eclipse.org/eclipselink/">Eclipse Link</a> as JPA provider. Using Eclipse Link is the standard for NW Cloud. The second parameter specifies that we want to use a <a href="http://hsqldb.org/">HSQLDB</a> that stores data just in memory. This is great for local testing, as we do not need to setup a database server. Later on you will see how easy it is to switch to NW Cloud's persistency service to really store our data.</p>
+      	<p>The first command tells Roo to setup a project named <code>voting</code> having the top level package <code>com.sap.research</code> for our java classes. The second command sets up the kind of persistency we want to use to store our data. The first parameter tells Roo to use <a href="http://www.eclipse.org/eclipselink/">Eclipse Link</a> as JPA provider. Using Eclipse Link is the standard for HANA Cloud. The second parameter specifies that we want to use a <a href="http://hsqldb.org/">HSQLDB</a> that stores data just in memory. This is great for local testing, as we do not need to setup a database server. Later on you will see how easy it is to switch to HANA Cloud's persistency service to really store our data.</p>
 
       	<h3 id="defining-the-data-model">Defining the data model</h3>
 
@@ -130,13 +130,13 @@ web mvc all --package ~.controller</code></pre>
 
       	<h2 id="move-it-to-the-cloud">Move it to the cloud</h2>
 
-				<h3 id="deploying-and-running-on-sap-netweaver-cloud">Deploying and running on SAP NetWeaver Cloud</h3>
+		<h3 id="deploying-and-running-on-sap-hana-cloud">Deploying and running on SAP HANA Cloud</h3>
 
-      	<p>Up until now, we created our web application and tested it locally. Now, we want our application to run in the SAP NetWeaver Cloud and also to store its data there. To achieve this, we will use our addon to do two things:</p>
+      	<p>Up until now, we created our web application and tested it locally. Now, we want our application to run in the SAP HANA Cloud and also to store its data there. To achieve this, we will use our addon to do two things:</p>
 
       	<ul>
-      		<li>Integrate a special maven build plugin to the project, that will ease deployment to the SAP NetWeaver Cloud.</li>
-      		<li>Configure JPA persistency settings of the project to use NW Cloud's persistency service for data storage.</li>
+      		<li>Integrate a special maven build plugin to the project, that will ease deployment to the SAP HANA Cloud.</li>
+      		<li>Configure JPA persistency settings of the project to use HANA Cloud's persistency service for data storage.</li>
       	</ul>
 
       	<p>To configure the project in this way, start Roo and issue the following two commands on the Roo shell:</p>
@@ -148,7 +148,7 @@ nwcloud enable-jpa</code></pre>
 
       	<pre><code>mvn clean package</code></pre>
 
-      	<p>If you look at the output Maven creates at the end of the build process, you should now see some additional helpful notes about how you can deploy and run your web application to/in the SAP NetWeaver Cloud:</p>
+      	<p>If you look at the output Maven creates at the end of the build process, you should now see some additional helpful notes about how you can deploy and run your web application to/in the SAP HANA Cloud:</p>
 
       	<pre><code>...
 [echo]
@@ -162,7 +162,7 @@ nwcloud enable-jpa</code></pre>
 [echo] ---------------
 [echo]
 [echo] You could use the NWCloud-Maven-Plugin now to deploy your
-[echo] app to SAP NetWeaver Cloud, or test it on a local instance.
+[echo] app to SAP HANA Cloud, or test it on a local instance.
 [echo]
 [echo] To use the NWCloud-Maven-Plugin, type
 [echo]
@@ -170,18 +170,18 @@ nwcloud enable-jpa</code></pre>
 [echo]
 [echo] where &lt;goal&gt; is one of the following actions:
 [echo]
-[echo] deploy        -&gt;  Deploy WAR as app to NW Cloud
-[echo] start         -&gt;  Start app instance on NW Cloud
-[echo] stop          -&gt;  Stop app instance on NW Cloud
-[echo] undeploy      -&gt;  Undeploy app from NW Cloud
-[echo] status        -&gt;  Show status of app on NW Cloud
-[echo] apps          -&gt;  Show apps deployed on NW Cloud account
-[echo] comps         -&gt;  Show components of deployed app on NW Cloud
+[echo] deploy        -&gt;  Deploy WAR as app to cloud
+[echo] start         -&gt;  Start app instance on cloud
+[echo] stop          -&gt;  Stop app instance on cloud
+[echo] undeploy      -&gt;  Undeploy app from cloud
+[echo] status        -&gt;  Show status of app on cloud
+[echo] apps          -&gt;  Show apps deployed on cloud account
+[echo] comps         -&gt;  Show components of deployed app on cloud
 [echo]
-[echo] deploy-local  -&gt;  Deploy WAR to local NW Cloud server
-[echo] start-local   -&gt;  Start local NW Cloud server
-[echo] stop-local    -&gt;  Stop local NW Cloud server
-[echo] clean-local   -&gt;  Delete WAR from local NW Cloud server
+[echo] deploy-local  -&gt;  Deploy WAR to local cloud server
+[echo] start-local   -&gt;  Start local cloud server
+[echo] stop-local    -&gt;  Stop local cloud server
+[echo] clean-local   -&gt;  Delete WAR from local cloud server
 [echo]
 [echo] usage         -&gt;  Show usage info and currently used settings
 [echo]
@@ -191,14 +191,14 @@ nwcloud enable-jpa</code></pre>
     	  <p>For the next step it is important that you adjust the file <code>nwcloud.properties</code> that has been created by our addon in the project’s root directory. In this file you need to define</p>
 
     	  <ul>
-    	  	<li>your SCN user (to be able to access SAP NetWeaver Cloud),</li>
+    	  	<li>your SCN user (to be able to access SAP HANA Cloud),</li>
     	  	<li>the desired target of deployment, and</li>
-    	  	<li>the location of the SAP NetWeaver Cloud SDK.</li>
+    	  	<li>the location of the SAP HANA Cloud SDK.</li>
     	  </ul>
 
         <blockquote>
       	  <p><strong>SCN user and free developer account</strong></p>
-      	  <p>If you do not have access to SAP NetWeaver Cloud yet, please register a user at <a href="http://scn.sap.com/">SAP Community Network (SCN)</a> and follow the steps explained <a href="http://scn.sap.com/docs/DOC-28197">here</a> to get a free developer account.</p>
+      	  <p>If you do not have access to SAP HANA Cloud yet, please register a user at <a href="http://scn.sap.com/">SAP Community Network (SCN)</a> and follow the steps explained <a href="http://scn.sap.com/docs/DOC-28197">here</a> to get a free developer account.</p>
       	</blockquote>
 
       	<p>Now use the text editor of your choice to open <code>nwcloud.properties</code>, and set your SCN user (password is optional) in the following lines:</p>
@@ -212,34 +212,34 @@ nwcloud enable-jpa</code></pre>
 user=myscnuser
 #password=myscnpassword</code></pre>
 
-      	<p>(Note: It is possible to use encrypted passwords from Maven settings here. Further information can be found in section "Using encrypted passwords" of appendix <a href="https://github.com/sapnwcloudlabs/nwcloud-maven-plugin/blob/master/README.md">here</a>.)</p>
+      	<p>(Note: It is possible to use encrypted passwords from Maven settings here. Further information can be found in section "Using encrypted passwords" of appendix <a href="https://github.com/SAP/cloud-maven-plugin/blob/master/README.md">here</a>.)</p>
 
       	<p>Define where to deploy the web application by adjusting the following lines:</p>
 
       	<pre><code># -----------------------------------------------------------------------------
 # Target for deployment (host, account, application)
 # -----------------------------------------------------------------------------
-#  - host: The target platform to deploy to (e.g. https://netweaver.ondemand.com)
+#  - host: The target platform to deploy to (e.g. https://hana.ondemand.com)
 #  - account: The account to deploy to
 #  - application:
 #     - Name/ID of the application to deploy (non-empty, alphanumeric, lowercase
 #       letters, starting with a letter, max. 30 characters).
 #     - If not specified, the maven project name in lowercase letters will be used.
-host=https://netweaver.ondemand.com
+host=https://hana.ondemand.com
 account=myaccount
 #application=myapp</code></pre>
 
       	<blockquote>
       	  <p><strong>Hint</strong></p>
-      	  <p>If you are using the SAP NetWeaver Cloud free developer account then the host is <code>https://nwtrial.ondemand.com</code></p>
+      	  <p>If you are using the SAP HANA Cloud free developer account then the host is <code>https://hanatrial.ondemand.com</code></p>
       	</blockquote>
 
-      	<p>Finally make sure that the following line is pointing to the directory where you have installed the SAP NetWeaver Cloud SDK (Neo SDK) to (cf. section "SAP NetWeaver Cloud SDK" of the initial <a href="setup.html">setup instructions</a>).</p>
+      	<p>Finally make sure that the following line is pointing to the directory where you have installed the SAP HANA Cloud SDK (Neo SDK) to (cf. section "SAP HANA Cloud SDK" of the initial <a href="setup.html">setup instructions</a>).</p>
 
       	<pre><code># -----------------------------------------------------------------------------
 # Location of Neo SDK
 # -----------------------------------------------------------------------------
-#  - Download Neo SDK from: https://tools.netweaver.ondemand.com/
+#  - Download Neo SDK from: https://tools.hana.ondemand.com/
 #  - Extract Neo SDK to a directory and specify its path in sdk.dir setting.
 #     - Windows users: Please use double backslash instead of single backslash (e.g. c:\\Program Files\\Neo-SDK)
 #     - Linux/Mac users: Just use normal slash as usual (e.g. /home/myuser/bin/neo-sdk)
@@ -253,7 +253,7 @@ sdk.dir=c:\\Program Files\\Neo-SDK</code></pre>
 # - If you are behind a proxy and autodetect does not work or you need to override the settings, this can be done here.
 #sdk.proxy=-Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.nonProxyHosts="localhost|127.0.0.1" -Dhttps.nonProxyHosts="localhost|127.0.0.1" -Dhttp.proxyUser=proxyuser -Dhttp.proxyPassword=proxypassword -Dhttps.proxyUser=proxyuser -Dhttps.proxyPassword=proxypassword</code></pre>
 
-      	<p>After we have setup the deployment options, we can now perform the actual deployment as explained by the help text. We can use the Maven commands <code>nwcloud:deploy</code> for deployment to NW Cloud and then use <code>nwcloud:start</code> to start up an instance in NW Cloud to run our web application. And as Maven allows to write sequences of commands we can do this using one line:</p>
+      	<p>After we have setup the deployment options, we can now perform the actual deployment as explained by the help text. We can use the Maven commands <code>nwcloud:deploy</code> for deployment to HANA Cloud and then use <code>nwcloud:start</code> to start up an instance in HANA Cloud to run our web application. And as Maven allows to write sequences of commands we can do this using one line:</p>
 
       	<pre><code>mvn nwcloud:deploy nwcloud:start</code></pre>
 
@@ -262,23 +262,23 @@ sdk.dir=c:\\Program Files\\Neo-SDK</code></pre>
       	<pre><code>...
 [java] web: STARTED
 [java]
-[java] URL: https://votingmyaccount.netweaver.ondemand.com
+[java] URL: https://votingmyaccount.hana.ondemand.com
 [java]
 [java] Access points:
-[java]   https://votingmyaccount.netweaver.ondemand.com
+[java]   https://votingmyaccount.hana.ondemand.com
 ...</code></pre>
 
-      	<p>After successful deployment and startup of the instance, we can now access our web application in the SAP NetWeaver Cloud. To do this, we need to append a slash <code>/</code> and the name of the web application at the end of the URL that is shown on the console after the startup of the instance. As the web application in our example is called <code>voting</code> we use the following URL in our favorite web browser to access it:</p>
+      	<p>After successful deployment and startup of the instance, we can now access our web application in the SAP HANA Cloud. To do this, we need to append a slash <code>/</code> and the name of the web application at the end of the URL that is shown on the console after the startup of the instance. As the web application in our example is called <code>voting</code> we use the following URL in our favorite web browser to access it:</p>
 
-      	<pre><code>https://votingmyaccount.netweaver.ondemand.com/voting</code></pre>
+      	<pre><code>https://votingmyaccount.hana.ondemand.com/voting</code></pre>
 
-      	<p>If you now enter data like demos, jury members, and votes into the web application, this data will be stored using the persistency service of the NW Cloud. So you can shutdown and then restart the instance, and the data will still be there, as it is stored independently from your web application in a database on the NW Cloud.</p>
+      	<p>If you now enter data like demos, jury members, and votes into the web application, this data will be stored using the persistency service of the HANA Cloud. So you can shutdown and then restart the instance, and the data will still be there, as it is stored independently from your web application in a database on the HANA Cloud.</p>
 
       	<h2 id="congratulations">Congratulations</h2>
 
       	<p>That’s it!</p>
 
-      	<p>You just created your first web application using Roo and successfully deployed it to the NW Cloud platform - and all this in just a few minutes!</p>
+      	<p>You just created your first web application using Roo and successfully deployed it to the HANA Cloud platform - and all this in just a few minutes!</p>
 
       	<p>What you could do now:</p>
 
@@ -286,7 +286,7 @@ sdk.dir=c:\\Program Files\\Neo-SDK</code></pre>
       		<li>Import the Maven project into an IDE like Eclipse or STS and start modifying or extending it.</li>
       		<li>Create a mobile app that uses the web application as a backend by pushing/pulling data to/from it in JSON format using its REST interfaces.</li>
       		<li>Go to the <a href="http://www.springsource.org/spring-roo">Roo website</a> and find out more about Roo.</li>
-			<li>Check out our <a href="http://sapnwcloudlabs.github.com/nwcloud-roo-gwaddon/">Roo addon for SAP Gateway</a> to integarte entities from SAP Gateway systems.</li>
+			<li>Check out our <a href="http://sap.github.com/cloud-roo-gwaddon/">Roo addon for SAP NetWeaver Gateway</a> to integarte entities from SAP NetWeaver Gateway systems.</li>
       	</ul>
 
       </section>
